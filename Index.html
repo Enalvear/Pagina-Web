@@ -3,47 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <title>Para Nosotros ❤️</title>
+
   <style>
     body {
-      font-family: Arial;
-      text-align: center;
-      background: #ffe6eb;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .carousel img {
-      width: 450px;
-      height: 500px;
+	/* 🌸 Corazones */
+  .heart {
+    position: absolute;
+    color: rgba(255, 77, 109, 0.7);
+    font-size: 35px;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    from {
+      transform: translateY(100vh);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-10vh);
+      opacity: 0;
+    }
+  }
+
+  /* ✨ Glassmorphism */
+  .container {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    width: 450px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
       border-radius: 15px;
     }
+
+    .carousel img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 15px;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .carousel img:hover {
+      transform: scale(1.05);
+    }
+
+    .buttons {
+      margin-top: 10px;
+    }
+
     button {
-      margin: 10px;
-      padding: 10px;
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: #ff1e4d;
+      transform: translateY(-2px);
+    }
+
+    #mensaje {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #555;
+      font-style: italic;
+      animation: fadeText 1s;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeText {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
+
 <body>
 
+<div class="container">
   <h1>💖 Nuestra Historia 💖</h1>
 
   <div class="carousel">
-    <img id="foto" src="foto11.jpeg">
+    <img id="foto" src="foto2.jpeg">
   </div>
 
-  <br>
-  <button onclick="prev()">⬅️</button>
-  <button onclick="next()">➡️</button>
+  <div class="buttons">
+    <button onclick="prev()">⬅️</button>
+    <button onclick="next()">➡️</button>
+  </div>
 
-  <p id="mensaje">
-    Desde que llegaste, todo es más bonito ❤️
-  </p>
+  <p id="mensaje">Desde que llegaste, todo es más bonito ❤️</p>
+</div>
 
 <script>
-  let fotos = ["foto1.jpeg", "foto2.jpeg", "foto3.jpeg","foto4.jpeg", "foto5.jpeg", "foto6.jpeg","foto7.jpeg", "foto8.jpeg", "foto9.jpeg", "foto10.jpeg", "foto11.jpeg"];
+  let fotos = ["foto2.jpeg","foto1.jpeg",  "foto3.jpeg","foto4.jpeg", "foto5.jpeg", "foto6.jpeg","foto7.jpeg", "foto8.jpeg", "foto9.jpeg", "foto10.jpeg", "foto11.jpeg"];
+  let mensajes = [
+    "Desde que llegaste, todo es más bonito ❤️",
+    "Eres mi lugar favorito 🌍",
+    "❤️ La primera vez que nos conocimos de verdad ❤️",
+	"Por más citas diferentes ❤️",
+	"Eres mi mundo entero negrita 💕",
+	"Desde que te conozco siento que nada es imposible 💕",
+	"He visitado muchos lugares y contigo me siento en casa 💕",
+	"Contigo todo tiene sentido 💕",
+	"Eres lo más bonito y puro en mi vida ❤️",
+	"Te amo menos que mañana y mucho más que ayer",
+	"Te amo hoy mañana y siempre 💖",
+  ];
+
   let index = 0;
 
   function show() {
-    document.getElementById("foto").src = fotos[index];
-  }
+    let img = document.getElementById("foto");
+    let texto = document.getElementById("mensaje");
 
+    img.style.opacity = 0;
+
+    setTimeout(() => {
+      img.src = fotos[index];
+      texto.innerText = mensajes[index];
+      img.style.opacity = 1;
+    }, 300);
+  }
   function next() {
     index = (index + 1) % fotos.length;
     show();
@@ -53,6 +169,23 @@
     index = (index - 1 + fotos.length) % fotos.length;
     show();
   }
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }
+
+  setInterval(createHeart, 300);
 </script>
 
 </body>
