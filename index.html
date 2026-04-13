@@ -360,6 +360,7 @@ body {
 // Forzar música al primer clic si el navegador la bloqueó
 document.body.addEventListener('click', () => {
     const m = document.getElementById("musica");
+	m.volume = 0.4;
     if(m.paused) m.play();
 }, {once: true});
 
